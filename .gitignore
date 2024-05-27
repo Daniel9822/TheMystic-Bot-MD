@@ -2,7 +2,7 @@
 
 .github
 node_modules
-MysticSession
+# MysticSession
 tmp
 jadibts
 pluginpilot

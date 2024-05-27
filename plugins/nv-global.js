@@ -14,13 +14,13 @@ handler.all = async function(m, {conn}) {
     this.sendMessage(m.chat, {text: join.trim(), mentions: [...join.matchAll(/@([0-9]{5,16}|0)/g)].map((v) => v[1] + '@s.whatsapp.net'), contextInfo: {forwardingScore: 9999999, isForwarded: true, mentionedJid: [...join.matchAll(/@([0-9]{5,16}|0)/g)].map((v) => v[1] + '@s.whatsapp.net'), "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "renderLargerThumbnail": true, "title": global.titulowm2, "containsAutoReply": true, "mediaType": 1, "thumbnail": global.imagen6, "mediaUrl": `https://www.atom.bio/theshadowbrokers-team`, "sourceUrl": `https://www.atom.bio/theshadowbrokers-team`}}}, {quoted: m});
   }
 
-  if (/^hola$/i.test(m.text) && !chat.isBanned) {
-    if (!db.data.chats[m.chat].audios) return;
-    if (!db.data.settings[this.user.jid].audios_bot && !m.isGroup) return;
-    const vn = './media/Hola.mp3';
-    mconn.conn.sendPresenceUpdate('recording', m.chat);
-    mconn.conn.sendMessage(m.chat, {audio: {url: vn}, fileName: 'error.mp3', mimetype: 'audio/mpeg', ptt: true}, {quoted: m});
-  }
+  // if (/^hola$/i.test(m.text) && !chat.isBanned) {
+  //   if (!db.data.chats[m.chat].audios) return;
+  //   if (!db.data.settings[this.user.jid].audios_bot && !m.isGroup) return;
+  //   const vn = './media/Hola.mp3';
+  //   mconn.conn.sendPresenceUpdate('recording', m.chat);
+  //   mconn.conn.sendMessage(m.chat, {audio: {url: vn}, fileName: 'error.mp3', mimetype: 'audio/mpeg', ptt: true}, {quoted: m});
+  // }
 
   if (/^que no$/i.test(m.text) && !chat.isBanned) {
     if (!db.data.chats[m.chat].audios) return;
