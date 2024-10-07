@@ -1,10 +1,10 @@
 
 
 const handler = async (m, {conn, isPrems}) => {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.plugins.rpg_minar
+  const datas = global;
+  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.plugins.rpg_minar;
 
   const hasil = Math.floor(Math.random() * 1000);
   const time = global.db.data.users[m.sender].lastmiming + 600000;

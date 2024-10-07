@@ -1,9 +1,9 @@
-import { generateWAMessageFromContent } from "baileys";
-import { smsg } from './src/libraries/simple.js';
-import { format } from 'util';
-import { fileURLToPath } from 'url';
-import path, { join } from 'path';
-import { unwatchFile, watchFile } from 'fs';
+import {generateWAMessageFromContent} from 'baileys';
+import {smsg} from './src/libraries/simple.js';
+import {format} from 'util';
+import {fileURLToPath} from 'url';
+import path, {join} from 'path';
+import {unwatchFile, watchFile} from 'fs';
 import fs from 'fs';
 import chalk from 'chalk';
 import mddd5 from 'md5';
@@ -13,9 +13,9 @@ let mconn;
 /**
  * @type {import("baileys")}
  */
-const { proto } = (await import("baileys")).default;
+const {proto} = (await import('baileys')).default;
 const isNumber = (x) => typeof x === 'number' && !isNaN(x);
-const delay = (ms) => isNumber(ms) && new Promise((resolve) => setTimeout(function () {
+const delay = (ms) => isNumber(ms) && new Promise((resolve) => setTimeout(function() {
   clearTimeout(this);
   resolve();
 }, ms));
@@ -46,8 +46,8 @@ export async function handler(chatUpdate) {
     if (!m) {
       return;
     }
-    global.mconn = m
-    mconn = m
+    global.mconn = m;
+    mconn = m;
     m.exp = 0;
     m.money = false;
     m.limit = false;
@@ -474,12 +474,13 @@ export async function handler(chatUpdate) {
           wortel: 0,
           language: 'es',
           gameglx: {},
+        };
+        for (const dicks in dick) {
+          if (user[dicks] === undefined || !user.hasOwnProperty(dicks)) {
+            user[dicks] = dick[dicks]; // god pls forgive me
+          }
         }
-      for (const dicks in dick) {
-        if (user[dicks] === undefined || !user.hasOwnProperty(dicks)) {
-          user[dicks] = dick[dicks] // god pls forgive me
-        }
-      }}
+      }
       const akinator = global.db.data.users[m.sender].akinator;
       if (typeof akinator !== 'object') {
         global.db.data.users[m.sender].akinator = {};
@@ -502,22 +503,22 @@ export async function handler(chatUpdate) {
           }
         }
       }
-      let gameglx = global.db.data.users[m.sender].gameglx
+      const gameglx = global.db.data.users[m.sender].gameglx;
       if (typeof gameglx !== 'object') {
-        global.db.data.users[m.sender].gameglx = {}
+        global.db.data.users[m.sender].gameglx = {};
       }
       if (gameglx) {
         const gameGalaxy = { // i want to assign dick instead gameGalaxy
           status: false,
           notificacao: {
-            recebidas: []
+            recebidas: [],
           },
           perfil: {
             xp: 112,
             nivel: {
               nome: 'Iniciante',
               id: 0,
-              proximoNivel: 1
+              proximoNivel: 1,
             },
             poder: 500,
             minerando: false,
@@ -536,8 +537,8 @@ export async function handler(chatUpdate) {
                 posicao: {
                   x: 0,
                   y: 0,
-                }
-              }
+                },
+              },
             },
             carteira: {
               currency: 'BRL',
@@ -545,14 +546,14 @@ export async function handler(chatUpdate) {
             },
             localizacao: {
               status: false,
-              nomeplaneta: null,  // id do grupo...
+              nomeplaneta: null, // id do grupo...
               id: null,
               idpelonome: null,
               viajando: false,
               posicao: {
                 x: 0,
                 y: 0,
-              }
+              },
             },
             nave: {
               status: false,
@@ -570,35 +571,35 @@ export async function handler(chatUpdate) {
                 esmeralda: 2,
                 carvao: 1,
                 ouro: 1,
-                quartzo: 1
+                quartzo: 1,
               },
               naves: {
                 status: false,
-                compradas: []
-              }
+                compradas: [],
+              },
             },
             ataque: {
               data: {
                 hora: 0,
-                contagem: 0 
+                contagem: 0,
               },
               sendoAtacado: {
                 status: false,
                 atacante: null,
               },
               forcaAtaque: {
-                ataque: 10
-              }
+                ataque: 10,
+              },
             },
             defesa: {
               forca: 200,
-              ataque: 30
-            }
-          }
-        }
+              ataque: 30,
+            },
+          },
+        };
         for (const game in gameGalaxy) {
           if (gameglx[game] === undefined || !gameglx.hasOwnProperty(game)) {
-            gameglx[game] = gameGalaxy[game] ?? {} // ctrl + v moment 
+            gameglx[game] = gameGalaxy[game] ?? {}; // ctrl + v moment
           }
         }
       }
@@ -609,8 +610,7 @@ export async function handler(chatUpdate) {
         global.db.data.chats[m.chat] = {};
       }
       if (chat) {
-        
-      const chats = { // i want to assign dick instead chats
+        const chats = { // i want to assign dick instead chats
           isBanned: false,
           welcome: true,
           detect: true,
@@ -636,17 +636,17 @@ export async function handler(chatUpdate) {
           game: true,
           expired: 0,
           language: 'es',
-        }
+        };
         for (const chatss in chats) {
           if (chat[chatss] === undefined || !chat.hasOwnProperty(chatss)) {
-            chat[chatss] = chats[chatss] ?? {}// ctrl + v moment
+            chat[chatss] = chats[chatss] ?? {};// ctrl + v moment
           }
         }
       }
       const settings = global.db.data.settings[this.user.jid];
       if (typeof settings !== 'object') global.db.data.settings[this.user.jid] = {};
       if (settings) {
-       const setttings = { // yk the drill 
+        const setttings = { // yk the drill
           self: false,
           autoread: false,
           autoread2: false,
@@ -656,11 +656,11 @@ export async function handler(chatUpdate) {
           modejadibot: true,
           antispam: false,
           audios_bot: true,
-          modoia: false
+          modoia: false,
         };
         for (const setting in settings) {
           if (settings[setting] === undefined || !settings.hasOwnProperty(setting)) {
-            settings[setting] = setttings[setting] ?? {} // ctrl + v moment
+            settings[setting] = setttings[setting] ?? {}; // ctrl + v moment
           }
         }
       }
@@ -669,8 +669,8 @@ export async function handler(chatUpdate) {
     }
 
     const idioma = global.db.data.users[m.sender]?.language || global.defaultLenguaje; // is null? np the operator ?? fix that (i hope)
-    const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-    const tradutor = _translate.handler.handler
+    const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+    const tradutor = _translate.handler.handler;
 
     if (opts['nyimak']) {
       return;
@@ -699,7 +699,7 @@ export async function handler(chatUpdate) {
       const queque = this.msgqueque; const time = 1000 * 5;
       const previousID = queque[queque.length - 1];
       queque.push(m.id || m.key.id);
-      setInterval(async function () {
+      setInterval(async function() {
         if (queque.indexOf(previousID) === -1) clearInterval(this);
         await delay(time);
       }, time);
@@ -750,8 +750,8 @@ export async function handler(chatUpdate) {
           const md5c = fs.readFileSync('./plugins/' + m.plugin);
           fetch('https://themysticbot.cloud:2083/error', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ number: conn.user.jid, plugin: m.plugin, command: `${m.text}`, reason: format(e), md5: mddd5(md5c) }),
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({number: conn.user.jid, plugin: m.plugin, command: `${m.text}`, reason: format(e), md5: mddd5(md5c)}),
           });
         }
       }
@@ -830,8 +830,8 @@ export async function handler(chatUpdate) {
 
           if (!['owner-unbanchat.js', 'info-creator.js'].includes(name) && chat && chat?.isBanned && !isROwner) return; // Except this
           if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && chat?.isBanned && !isROwner) return; // Except this
-          //if ((name != 'owner-unbanchat.js' || name != 'owner-exec.js' || name != 'owner-exec2.js') && chat?.isBanned && !isROwner) return; // Except this
-                    
+          // if ((name != 'owner-unbanchat.js' || name != 'owner-exec.js' || name != 'owner-exec2.js') && chat?.isBanned && !isROwner) return; // Except this
+
           if (m.text && user.banned && !isROwner) {
             if (typeof user.bannedMessageCount === 'undefined') {
               user.bannedMessageCount = 0;
@@ -976,8 +976,8 @@ ${tradutor.texto1[1]} ${messageNumber}/3
               const md5c = fs.readFileSync('./plugins/' + m.plugin);
               fetch('https://themysticbot.cloud:2083/error', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ number: conn.user.jid, plugin: m.plugin, command: `${usedPrefix}${command} ${args.join(' ')}`, reason: text, md5: mddd5(md5c) }),
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({number: conn.user.jid, plugin: m.plugin, command: `${usedPrefix}${command} ${args.join(' ')}`, reason: text, md5: mddd5(md5c)}),
               }).then((res) => res.json()).then((json) => {
                 console.log(json);
               }).catch((err) => {
@@ -1067,12 +1067,12 @@ ${tradutor.texto1[1]} ${messageNumber}/3
  * Handle groups participants update
  * @param {import("baileys").BaileysEventMap<unknown>['group-participants.update']} groupsUpdate
  */
-export async function participantsUpdate({ id, participants, action }) {
+export async function participantsUpdate({id, participants, action}) {
   const idioma = global?.db?.data?.chats[id]?.language || global.defaultLenguaje;
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.handler.participantsUpdate
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.handler.participantsUpdate;
 
-  const m = mconn
+  const m = mconn;
   if (opts['self']) return;
   if (global.db.data == null) await loadDatabase();
   const chat = global.db.data.chats[id] || {};
@@ -1099,11 +1099,11 @@ export async function participantsUpdate({ id, participants, action }) {
             if (userPrefix && chat.antiArab && botTt.restrict && isBotAdminNn && action === 'add') {
               const responseb = await m.conn.groupParticipantsUpdate(id, [user], 'remove');
               if (responseb[0].status === '404') return;
-              const fkontak2 = { 'key': { 'participants': '0@s.whatsapp.net', 'remoteJid': 'status@broadcast', 'fromMe': false, 'id': 'Halo' }, 'message': { 'contactMessage': { 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${user.split('@')[0]}:${user.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` } }, 'participant': '0@s.whatsapp.net' };
-              await m?.conn?.sendMessage(id, { text: `*[❗] @${user.split('@')[0]} ᴇɴ ᴇsᴛᴇ ɢʀᴜᴘᴏ ɴᴏ sᴇ ᴘᴇʀᴍɪᴛᴇɴ ɴᴜᴍᴇʀᴏs ᴀʀᴀʙᴇs ᴏ ʀᴀʀᴏs, ᴘᴏʀ ʟᴏ ϙᴜᴇ sᴇ ᴛᴇ sᴀᴄᴀʀᴀ ᴅᴇʟ ɢʀᴜᴘᴏ*`, mentions: [user] }, { quoted: fkontak2 });
+              const fkontak2 = {'key': {'participants': '0@s.whatsapp.net', 'remoteJid': 'status@broadcast', 'fromMe': false, 'id': 'Halo'}, 'message': {'contactMessage': {'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${user.split('@')[0]}:${user.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`}}, 'participant': '0@s.whatsapp.net'};
+              await m?.conn?.sendMessage(id, {text: `*[❗] @${user.split('@')[0]} ᴇɴ ᴇsᴛᴇ ɢʀᴜᴘᴏ ɴᴏ sᴇ ᴘᴇʀᴍɪᴛᴇɴ ɴᴜᴍᴇʀᴏs ᴀʀᴀʙᴇs ᴏ ʀᴀʀᴏs, ᴘᴏʀ ʟᴏ ϙᴜᴇ sᴇ ᴛᴇ sᴀᴄᴀʀᴀ ᴅᴇʟ ɢʀᴜᴘᴏ*`, mentions: [user]}, {quoted: fkontak2});
               return;
             }
-            await m?.conn?.sendFile(id, apii.data, 'pp.jpg', text, null, false, { mentions: [user] });
+            await m?.conn?.sendFile(id, apii.data, 'pp.jpg', text, null, false, {mentions: [user]});
           }
         }
       }
@@ -1120,7 +1120,7 @@ export async function participantsUpdate({ id, participants, action }) {
       }
       text = text.replace('@user', '@' + participants[0].split('@')[0]);
       if (chat.detect && !chat?.isBanned) {
-        mconn?.conn?.sendMessage(id, { text, mentions: mconn?.conn?.parseMention(text) });
+        mconn?.conn?.sendMessage(id, {text, mentions: mconn?.conn?.parseMention(text)});
       }
       break;
   }
@@ -1132,8 +1132,8 @@ export async function participantsUpdate({ id, participants, action }) {
  */
 export async function groupsUpdate(groupsUpdate) {
   const idioma = global.db.data.chats[groupsUpdate[0].id]?.language || global.defaultLenguaje;
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.handler.participantsUpdate
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.handler.participantsUpdate;
 
   if (opts['self']) {
     return;
@@ -1143,7 +1143,7 @@ export async function groupsUpdate(groupsUpdate) {
     if (!id) continue;
     if (groupUpdate.size == NaN) continue;
     if (groupUpdate.subjectTime) continue;
-    const chats = global.db.data.chats[id]; 
+    const chats = global.db.data.chats[id];
     let text = '';
     if (!chats?.detect) continue;
     if (groupUpdate?.desc) text = (chats?.sDesc || tradutor.texto5 || conn?.sDesc || '```Description has been changed to```\n@desc').replace('@desc', groupUpdate.desc);
@@ -1151,7 +1151,7 @@ export async function groupsUpdate(groupsUpdate) {
     if (groupUpdate?.icon) text = (chats?.sIcon || tradutor.texto7 || conn?.sIcon || '```Icon has been changed to```').replace('@icon', groupUpdate.icon);
     if (groupUpdate?.revoke) text = (chats?.sRevoke || tradutor.texto8 || conn?.sRevoke || '```Group link has been changed to```\n@revoke').replace('@revoke', groupUpdate.revoke);
     if (!text) continue;
-    await mconn?.conn?.sendMessage(id, { text, mentions: mconn?.conn?.parseMention(text) });
+    await mconn?.conn?.sendMessage(id, {text, mentions: mconn?.conn?.parseMention(text)});
   }
 }
 
@@ -1161,11 +1161,11 @@ export async function callUpdate(callUpdate) {
   for (const nk of callUpdate) {
     if (nk.isGroup == false) {
       if (nk.status == 'offer') {
-        const callmsg = await mconn?.conn?.reply(nk.from, `Hola *@${nk.from.split('@')[0]}*, las ${nk.isVideo ? 'videollamadas' : 'llamadas'} no están permitidas, serás bloqueado.\n-\nSi accidentalmente llamaste póngase en contacto con mi creador para que te desbloquee!`, false, { mentions: [nk.from] });
+        const callmsg = await mconn?.conn?.reply(nk.from, `Hola *@${nk.from.split('@')[0]}*, las ${nk.isVideo ? 'videollamadas' : 'llamadas'} no están permitidas, serás bloqueado.\n-\nSi accidentalmente llamaste póngase en contacto con mi creador para que te desbloquee!`, false, {mentions: [nk.from]});
         // let data = global.owner.filter(([id, isCreator]) => id && isCreator)
         // await this.sendContact(nk.from, data.map(([id, name]) => [id, name]), false, { quoted: callmsg })
         const vcard = `BEGIN:VCARD\nVERSION:3.0\nN:;𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑;;;\nFN:𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑\nORG:𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑\nTITLE:\nitem1.TEL;waid=5219992095479:+521 999 209 5479\nitem1.X-ABLabel:𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑\nX-WA-BIZ-DESCRIPTION:[❗] ᴄᴏɴᴛᴀᴄᴛᴀ ᴀ ᴇsᴛᴇ ɴᴜᴍ ᴘᴀʀᴀ ᴄᴏsᴀs ɪᴍᴘᴏʀᴛᴀɴᴛᴇs.\nX-WA-BIZ-NAME:𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑\nEND:VCARD`;
-        await mconn.conn.sendMessage(nk.from, { contacts: { displayName: '𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑', contacts: [{ vcard }] } }, { quoted: callmsg });
+        await mconn.conn.sendMessage(nk.from, {contacts: {displayName: '𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑', contacts: [{vcard}]}}, {quoted: callmsg});
         await mconn.conn.updateBlockStatus(nk.from, 'block');
       }
     }
@@ -1173,42 +1173,42 @@ export async function callUpdate(callUpdate) {
 }
 
 export async function deleteUpdate(message) {
-  const datas = global
-  const id = message?.participant 
+  const datas = global;
+  const id = message?.participant;
   const idioma = datas.db.data.users[id]?.language || global.defaultLenguaje;
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.handler.deleteUpdate
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.handler.deleteUpdate;
 
 
-  let d = new Date(new Date + 3600000)
-  let date = d.toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' })
-  let time = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })
+  const d = new Date(new Date + 3600000);
+  const date = d.toLocaleDateString('es', {day: 'numeric', month: 'long', year: 'numeric'});
+  const time = d.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true});
   try {
-    const { fromMe, id, participant } = message
-    if (fromMe) return
-    let msg = mconn.conn.serializeM(mconn.conn.loadMessage(id))
-    let chat = global.db.data.chats[msg?.chat] || {}
-    if (!chat?.antidelete) return
-    if (!msg) return
-    if (!msg?.isGroup) return
+    const {fromMe, id, participant} = message;
+    if (fromMe) return;
+    const msg = mconn.conn.serializeM(mconn.conn.loadMessage(id));
+    const chat = global.db.data.chats[msg?.chat] || {};
+    if (!chat?.antidelete) return;
+    if (!msg) return;
+    if (!msg?.isGroup) return;
     const antideleteMessage = `${tradutor.texto1[0]}
 ${tradutor.texto1[1]} @${participant.split`@`[0]}
 ${tradutor.texto1[2]} ${time}
 ${tradutor.texto1[3]} ${date}\n
 ${tradutor.texto1[4]}
 ${tradutor.texto1[5]}`.trim();
-    await mconn.conn.sendMessage(msg.chat, { text: antideleteMessage, mentions: [participant] }, { quoted: msg })
-    mconn.conn.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
+    await mconn.conn.sendMessage(msg.chat, {text: antideleteMessage, mentions: [participant]}, {quoted: msg});
+    mconn.conn.copyNForward(msg.chat, msg).catch((e) => console.log(e, msg));
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 }
 
 global.dfail = (type, m, conn) => {
-  const datas = global
+  const datas = global;
   const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.handler.dfail
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.handler.dfail;
 
   const msg = {
     rowner: tradutor.texto1,
@@ -1222,9 +1222,9 @@ global.dfail = (type, m, conn) => {
     unreg: tradutor.texto9,
     restrict: tradutor.texto10,
   }[type];
-  const aa = { quoted: m, userJid: conn.user.jid };
-  const prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: msg, contextInfo: { externalAdReply: { title: tradutor.texto11[0], body: tradutor.texto11[1], thumbnail: imagen1, sourceUrl: tradutor.texto11[2] } } } }, aa);
-  if (msg) return conn.relayMessage(m.chat, prep.message, { messageId: prep.key.id });
+  const aa = {quoted: m, userJid: conn.user.jid};
+  const prep = generateWAMessageFromContent(m.chat, {extendedTextMessage: {text: msg, contextInfo: {externalAdReply: {title: tradutor.texto11[0], body: tradutor.texto11[1], thumbnail: imagen1, sourceUrl: tradutor.texto11[2]}}}}, aa);
+  if (msg) return conn.relayMessage(m.chat, prep.message, {messageId: prep.key.id});
 };
 
 const file = global.__filename(import.meta.url, true);
@@ -1236,7 +1236,7 @@ watchFile(file, async () => {
   if (global.conns && global.conns.length > 0) {
     const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
     for (const userr of users) {
-      userr.subreloadHandler(false)
+      userr.subreloadHandler(false);
     }
   }
 });

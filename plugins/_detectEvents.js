@@ -4,18 +4,18 @@
 
 /* Bot: https://github.com/Gatito-kw/nekobot-md */
 
-import {WAMessageStubType} from "baileys";
+import {WAMessageStubType} from 'baileys';
 import fetch from 'node-fetch';
 
- // Para configurar o idioma, na raiz do projeto altere o arquivo config.json
-  // Para configurar el idioma, en la raíz del proyecto, modifique el archivo config.json.
-  // To set the language, in the root of the project, modify the config.json file.
+// Para configurar o idioma, na raiz do projeto altere o arquivo config.json
+// Para configurar el idioma, en la raíz del proyecto, modifique el archivo config.json.
+// To set the language, in the root of the project, modify the config.json file.
 
 export async function before(m, {conn, participants}) {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.plugins._detectevents
+  const datas = global;
+  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.plugins._detectevents;
 
   if (!m.messageStubType || !m.isGroup) return !0;
   const groupName = (await conn.groupMetadata(m.chat)).subject;

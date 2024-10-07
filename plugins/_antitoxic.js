@@ -1,17 +1,17 @@
 // TheMystic-Bot-MD@BrunoSobrino - _antitoxic.js
 
- // Para configurar o idioma, na raiz do projeto altere o arquivo config.json
-  // Para configurar el idioma, en la raíz del proyecto, modifique el archivo config.json.
-  // To set the language, in the root of the project, modify the config.json file.
+// Para configurar o idioma, na raiz do projeto altere o arquivo config.json
+// Para configurar el idioma, en la raíz del proyecto, modifique el archivo config.json.
+// To set the language, in the root of the project, modify the config.json file.
 
 
 const toxicRegex = /\b(puto|puta|rata|estupido|imbecil|rctmre|mrd|verga|vrga|maricon)\b/i;
 
 export async function before(m, {isAdmin, isBotAdmin, isOwner}) {
-  const datas = global
-    const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-    const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-    const tradutor = _translate.plugins._antitoxic
+  const datas = global;
+  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.plugins._antitoxic;
 
   if (m.isBaileys && m.fromMe) {
     return !0;

@@ -1,13 +1,12 @@
 
-  
 
 const handler = (m) => m;
 
 export async function all(m) {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.plugins._premium
+  const datas = global;
+  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.plugins._premium;
 
   for (const user of Object.values(global.db.data.users)) {
     if (user.premiumTime != 0 && user.premium) {

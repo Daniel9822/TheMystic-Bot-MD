@@ -4,10 +4,10 @@
 
 
 const handler = async (m, {conn, args, groupMetadata, participants, usedPrefix, command, isBotAdmin, isSuperAdmin}) => {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.plugins.gc_listanum_kicknum
+  const datas = global;
+  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.plugins.gc_listanum_kicknum;
 
   if (!args[0]) return m.reply(`${tradutor.texto1} ${usedPrefix + command} 52*`);
   if (isNaN(args[0])) return m.reply(`${tradutor.texto2} ${usedPrefix + command} 52*`);

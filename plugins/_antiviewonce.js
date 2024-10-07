@@ -1,15 +1,15 @@
-const {downloadContentFromMessage} = (await import("baileys"));
- // Para configurar o idioma, na raiz do projeto altere o arquivo config.json
-  // Para configurar el idioma, en la raíz del proyecto, modifique el archivo config.json.
-  // To set the language, in the root of the project, modify the config.json file.
+const {downloadContentFromMessage} = (await import('baileys'));
+// Para configurar o idioma, na raiz do projeto altere o arquivo config.json
+// Para configurar el idioma, en la raíz del proyecto, modifique el archivo config.json.
+// To set the language, in the root of the project, modify the config.json file.
 
 
 export async function before(m, {isAdmin, isBotAdmin}) {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.plugins._antiviewonce
-  
+  const datas = global;
+  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.plugins._antiviewonce;
+
   const chat = db.data.chats[m.chat];
   if (/^[.~#/\$,](read)?viewonce/.test(m.text)) return;
   if (!chat?.antiviewonce || chat?.isBanned) return;
@@ -21,7 +21,7 @@ export async function before(m, {isAdmin, isBotAdmin}) {
     for await (const chunk of media) {
       buffer = Buffer.concat([buffer, chunk]);
     }
-    const cap = tradutor.texto1
+    const cap = tradutor.texto1;
     if (/video/.test(type)) {
       return mconn.conn.sendFile(m.chat, buffer, 'error.mp4', `${msg[type].caption ? msg[type].caption + '\n\n' + cap : cap}`, m);
     } else if (/image/.test(type)) {

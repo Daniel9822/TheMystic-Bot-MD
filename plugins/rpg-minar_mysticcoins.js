@@ -1,9 +1,9 @@
 
 const handler = async (m, {conn, isPrems}) => { // lastmiming
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.plugins.rpg_minar_mysticcoins
+  const datas = global;
+  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.plugins.rpg_minar_mysticcoins;
 
   const user = global.db.data.users[m.sender];
   const premium = user.premium;

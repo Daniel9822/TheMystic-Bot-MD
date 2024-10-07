@@ -1,5 +1,5 @@
-"use strict";
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1'; 
+'use strict';
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1';
 import './config.js';
 import './api.js';
 import {createRequire} from 'module';
@@ -19,17 +19,17 @@ import {Boom} from '@hapi/boom';
 import {makeWASocket, protoType, serialize} from './src/libraries/simple.js';
 import {Low, JSONFile} from 'lowdb';
 import store from './src/libraries/store.js';
-const {DisconnectReason, useMultiFileAuthState, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, PHONENUMBER_MCC} = await import("baileys");
+const {DisconnectReason, useMultiFileAuthState, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, jidNormalizedUser, PHONENUMBER_MCC} = await import('baileys');
 import readline from 'readline';
 import NodeCache from 'node-cache';
 const {chain} = lodash;
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000;
-let stopped = 'close';  
+let stopped = 'close';
 protoType();
 serialize();
 const msgRetryCounterMap = new Map();
-const msgRetryCounterCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
-const userDevicesCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
+const msgRetryCounterCache = new NodeCache({stdTTL: 0, checkperiod: 0});
+const userDevicesCache = new NodeCache({stdTTL: 0, checkperiod: 0});
 
 global.__filename = function filename(pathURL = import.meta.url, rmPrefix = platform !== 'win32') {
   return rmPrefix ? /file:\/\/\//.test(pathURL) ? fileURLToPath(pathURL) : pathURL : pathToFileURL(pathURL).toString();
@@ -105,94 +105,98 @@ loadChatgptDB();
 const {state, saveCreds} = await useMultiFileAuthState(global.authFile);
 
 const {version} = await fetchLatestBaileysVersion();
-let phoneNumber = global.botnumber || process.argv.find(arg => /^\+\d+$/.test(arg));
+const phoneNumber = global.botnumber || process.argv.find((arg) => /^\+\d+$/.test(arg));
 
-const methodCodeQR = process.argv.includes("qr")
-const methodCode = !!phoneNumber || process.argv.includes("code")
-const MethodMobile = process.argv.includes("mobile")
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-const question = (texto) => new Promise((resolver) => rl.question(texto, resolver))
+const methodCodeQR = process.argv.includes('qr');
+const methodCode = !!phoneNumber || process.argv.includes('code');
+const MethodMobile = process.argv.includes('mobile');
+const rl = readline.createInterface({input: process.stdin, output: process.stdout});
+const question = (texto) => new Promise((resolver) => rl.question(texto, resolver));
 
-//Código adaptado para la compatibilidad de ser bot con el código de 8 digitos. Hecho por: https://github.com/GataNina-Li
-let opcion
+// Código adaptado para la compatibilidad de ser bot con el código de 8 digitos. Hecho por: https://github.com/GataNina-Li
+let opcion;
 if (methodCodeQR) {
-opcion = '1'
+  opcion = '1';
 }
 if (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`)) {
-do {
-opcion = await question('[ ℹ️ ] Seleccione una opción:\n1. Con código QR\n2. Con código de texto de 8 dígitos\n---> ')
-if (!/^[1-2]$/.test(opcion)) {
-console.log('[ ❗ ] Por favor, seleccione solo 1 o 2.\n')
-}} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${authFile}/creds.json`))
+  do {
+    opcion = await question('[ ℹ️ ] Seleccione una opción:\n1. Con código QR\n2. Con código de texto de 8 dígitos\n---> ');
+    if (!/^[1-2]$/.test(opcion)) {
+      console.log('[ ❗ ] Por favor, seleccione solo 1 o 2.\n');
+    }
+  } while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${authFile}/creds.json`));
 }
 
-console.info = () => {} // https://github.com/skidy89/baileys actualmente no muestra logs molestos en la consola
+console.info = () => {}; // https://github.com/skidy89/baileys actualmente no muestra logs molestos en la consola
 const connectionOptions = {
-    logger: Pino({ level: 'silent' }),
-    printQRInTerminal: opcion === '1' || methodCodeQR,
-    mobile: MethodMobile,
-    browser: opcion === '1' ? ['TheMystic-Bot-MD', 'Safari', '2.0.0'] : methodCodeQR ? ['TheMystic-Bot-MD', 'Safari', '2.0.0'] : ['Ubuntu', 'Chrome', '20.0.04'],
-    auth: {
-        creds: state.creds,
-        keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: 'fatal' }).child({ level: 'fatal' })),
-    },
-    waWebSocketUrl: 'wss://web.whatsapp.com/ws/chat?ED=CAIICA',
-    markOnlineOnConnect: true,
-    generateHighQualityLinkPreview: true,
-    getMessage: async (key) => {
-        let jid = jidNormalizedUser(key.remoteJid);
-        let msg = await store.loadMessage(jid, key.id);
-        return msg?.message || "";
-    },
-    patchMessageBeforeSending: async (message) => {
-        let messages = 0;
-        global.conn.uploadPreKeysToServerIfRequired();
-        messages++;
-        return message;
-    },
-    msgRetryCounterCache: msgRetryCounterCache,
-    userDevicesCache: userDevicesCache,
-    //msgRetryCounterMap,
-    defaultQueryTimeoutMs: undefined,
-    cachedGroupMetadata: (jid) => global.conn.chats[jid] ?? {},
-    version,
-    //userDeviceCache: msgRetryCounterCache <=== quien fue el pendejo?????
+  logger: Pino({level: 'silent'}),
+  printQRInTerminal: opcion === '1' || methodCodeQR,
+  mobile: MethodMobile,
+  browser: opcion === '1' ? ['TheMystic-Bot-MD', 'Safari', '2.0.0'] : methodCodeQR ? ['TheMystic-Bot-MD', 'Safari', '2.0.0'] : ['Ubuntu', 'Chrome', '20.0.04'],
+  auth: {
+    creds: state.creds,
+    keys: makeCacheableSignalKeyStore(state.keys, Pino({level: 'fatal'}).child({level: 'fatal'})),
+  },
+  waWebSocketUrl: 'wss://web.whatsapp.com/ws/chat?ED=CAIICA',
+  markOnlineOnConnect: true,
+  generateHighQualityLinkPreview: true,
+  getMessage: async (key) => {
+    const jid = jidNormalizedUser(key.remoteJid);
+    const msg = await store.loadMessage(jid, key.id);
+    return msg?.message || '';
+  },
+  patchMessageBeforeSending: async (message) => {
+    let messages = 0;
+    global.conn.uploadPreKeysToServerIfRequired();
+    messages++;
+    return message;
+  },
+  msgRetryCounterCache: msgRetryCounterCache,
+  userDevicesCache: userDevicesCache,
+  // msgRetryCounterMap,
+  defaultQueryTimeoutMs: undefined,
+  cachedGroupMetadata: (jid) => global.conn.chats[jid] ?? {},
+  version,
+  // userDeviceCache: msgRetryCounterCache <=== quien fue el pendejo?????
 };
 
 global.conn = makeWASocket(connectionOptions);
 
 if (!fs.existsSync(`./${authFile}/creds.json`)) {
-if (opcion === '2' || methodCode) {
-opcion = '2'
-if (!conn.authState.creds.registered) {  
-if (MethodMobile) throw new Error('No se puede usar un código de emparejamiento con la API móvil')
+  if (opcion === '2' || methodCode) {
+    opcion = '2';
+    if (!conn.authState.creds.registered) {
+      if (MethodMobile) throw new Error('No se puede usar un código de emparejamiento con la API móvil');
 
-let numeroTelefono
-if (!!phoneNumber) {
-numeroTelefono = phoneNumber.replace(/[^0-9]/g, '')
-if (!Object.keys(PHONENUMBER_MCC).some(v => numeroTelefono.startsWith(v))) {
-console.log(chalk.bgBlack(chalk.bold.redBright("Comience con el código de país de su número de WhatsApp.\nEjemplo: +5219992095479\n")))
-process.exit(0)
-}} else {
-while (true) {
-numeroTelefono = await question(chalk.bgBlack(chalk.bold.yellowBright('Por favor, escriba su número de WhatsApp.\nEjemplo: +5219992095479\n')))
-numeroTelefono = numeroTelefono.replace(/[^0-9]/g, '')
+      let numeroTelefono;
+      if (!!phoneNumber) {
+        numeroTelefono = phoneNumber.replace(/[^0-9]/g, '');
+        if (!Object.keys(PHONENUMBER_MCC).some((v) => numeroTelefono.startsWith(v))) {
+          console.log(chalk.bgBlack(chalk.bold.redBright('Comience con el código de país de su número de WhatsApp.\nEjemplo: +5219992095479\n')));
+          process.exit(0);
+        }
+      } else {
+        while (true) {
+          numeroTelefono = await question(chalk.bgBlack(chalk.bold.yellowBright('Por favor, escriba su número de WhatsApp.\nEjemplo: +5219992095479\n')));
+          numeroTelefono = numeroTelefono.replace(/[^0-9]/g, '');
 
-if (numeroTelefono.match(/^\d+$/) && Object.keys(PHONENUMBER_MCC).some(v => numeroTelefono.startsWith(v))) {
-break 
-} else {
-console.log(chalk.bgBlack(chalk.bold.redBright("Por favor, escriba su número de WhatsApp.\nEjemplo: +5219992095479.\n")))
-}}
-rl.close()  
-} 
+          if (numeroTelefono.match(/^\d+$/) && Object.keys(PHONENUMBER_MCC).some((v) => numeroTelefono.startsWith(v))) {
+            break;
+          } else {
+            console.log(chalk.bgBlack(chalk.bold.redBright('Por favor, escriba su número de WhatsApp.\nEjemplo: +5219992095479.\n')));
+          }
+        }
+        rl.close();
+      }
 
-        setTimeout(async () => {
-            let codigo = await conn.requestPairingCode(numeroTelefono)
-            codigo = codigo?.match(/.{1,4}/g)?.join("-") || codigo
-            console.log(chalk.yellow('[ ℹ️ ] introduce el código de emparejamiento en WhatsApp.'));
-            console.log(chalk.black(chalk.bgGreen(`Su código de emparejamiento: `)), chalk.black(chalk.white(codigo)))
-        }, 3000)
-}}
+      setTimeout(async () => {
+        let codigo = await conn.requestPairingCode(numeroTelefono);
+        codigo = codigo?.match(/.{1,4}/g)?.join('-') || codigo;
+        console.log(chalk.yellow('[ ℹ️ ] introduce el código de emparejamiento en WhatsApp.'));
+        console.log(chalk.black(chalk.bgGreen(`Su código de emparejamiento: `)), chalk.black(chalk.white(codigo)));
+      }, 3000);
+    }
+  }
 }
 
 conn.isInit = false;
@@ -219,13 +223,13 @@ if (opts['server']) (await import('./server.js')).default(global.conn, PORT);
         Aunque no dudara tan solo un segundo
         que me arrepiento de ser un grasoso
         Por que la grasa es un sentimiento
-        - El waza 👻👻👻👻 (Aiden)            
-        
+        - El waza 👻👻👻👻 (Aiden)
+
    Yo tambien se hacer momazos Aiden...
         ahi te va el ajuste de los borrados
         inteligentes de las sesiones y de los sub-bot
-        By (Rey Endymion 👺👍🏼) 
-        
+        By (Rey Endymion 👺👍🏼)
+
    Ninguno es mejor que tilin god
         - atte: sk1d             */
 
@@ -267,60 +271,63 @@ fs.watch(dirToWatchccc, (eventType, filename) => {
 });
 
 function purgeSession() {
-let prekey = []
-let directorio = readdirSync("./MysticSession")
-let filesFolderPreKeys = directorio.filter(file => {
-return file.startsWith('pre-key-') /*|| file.startsWith('session-') || file.startsWith('sender-') || file.startsWith('app-') */
-})
-prekey = [...prekey, ...filesFolderPreKeys]
-filesFolderPreKeys.forEach(files => {
-unlinkSync(`./MysticSession/${files}`)
-})
-} 
+  let prekey = [];
+  const directorio = readdirSync('./MysticSession');
+  const filesFolderPreKeys = directorio.filter((file) => {
+    return file.startsWith('pre-key-'); /* || file.startsWith('session-') || file.startsWith('sender-') || file.startsWith('app-') */
+  });
+  prekey = [...prekey, ...filesFolderPreKeys];
+  filesFolderPreKeys.forEach((files) => {
+    unlinkSync(`./MysticSession/${files}`);
+  });
+}
 
 function purgeSessionSB() {
-try {
-let listaDirectorios = readdirSync('./jadibts/');
-let SBprekey = []
-listaDirectorios.forEach(directorio => {
-if (statSync(`./jadibts/${directorio}`).isDirectory()) {
-let DSBPreKeys = readdirSync(`./jadibts/${directorio}`).filter(fileInDir => {
-return fileInDir.startsWith('pre-key-') /*|| fileInDir.startsWith('app-') || fileInDir.startsWith('session-')*/
-})
-SBprekey = [...SBprekey, ...DSBPreKeys]
-DSBPreKeys.forEach(fileInDir => {
-unlinkSync(`./jadibts/${directorio}/${fileInDir}`)
-})
+  try {
+    const listaDirectorios = readdirSync('./jadibts/');
+    let SBprekey = [];
+    listaDirectorios.forEach((directorio) => {
+      if (statSync(`./jadibts/${directorio}`).isDirectory()) {
+        const DSBPreKeys = readdirSync(`./jadibts/${directorio}`).filter((fileInDir) => {
+          return fileInDir.startsWith('pre-key-'); /* || fileInDir.startsWith('app-') || fileInDir.startsWith('session-')*/
+        });
+        SBprekey = [...SBprekey, ...DSBPreKeys];
+        DSBPreKeys.forEach((fileInDir) => {
+          unlinkSync(`./jadibts/${directorio}/${fileInDir}`);
+        });
+      }
+    });
+    if (SBprekey.length === 0) return; // console.log(chalk.cyanBright(`=> No hay archivos por eliminar.`))
+  } catch (err) {
+    console.log(chalk.bold.red(`[ ℹ️ ] Algo salio mal durante la eliminación, archivos no eliminados`));
+  }
 }
-})
-if (SBprekey.length === 0) return; //console.log(chalk.cyanBright(`=> No hay archivos por eliminar.`))
-} catch (err) {
-console.log(chalk.bold.red(`[ ℹ️ ] Algo salio mal durante la eliminación, archivos no eliminados`))
-}}
 
 function purgeOldFiles() {
-const directories = ['./MysticSession/', './jadibts/']
-const oneHourAgo = Date.now() - (60 * 60 * 1000)
-directories.forEach(dir => {
-readdirSync(dir, (err, files) => {
-if (err) throw err
-files.forEach(file => {
-const filePath = path.join(dir, file)
-stat(filePath, (err, stats) => {
-if (err) throw err;
-if (stats.isFile() && stats.mtimeMs < oneHourAgo && file !== 'creds.json') { 
-unlinkSync(filePath, err => {  
-if (err) throw err
-console.log(chalk.bold.green(`Archivo ${file} borrado con éxito`))
-})
-} else {  
-console.log(chalk.bold.red(`Archivo ${file} no borrado` + err))
-} }) }) }) })
+  const directories = ['./MysticSession/', './jadibts/'];
+  const oneHourAgo = Date.now() - (60 * 60 * 1000);
+  directories.forEach((dir) => {
+    readdirSync(dir, (err, files) => {
+      if (err) throw err;
+      files.forEach((file) => {
+        const filePath = path.join(dir, file);
+        stat(filePath, (err, stats) => {
+          if (err) throw err;
+          if (stats.isFile() && stats.mtimeMs < oneHourAgo && file !== 'creds.json') {
+            unlinkSync(filePath, (err) => {
+              if (err) throw err;
+              console.log(chalk.bold.green(`Archivo ${file} borrado con éxito`));
+            });
+          } else {
+            console.log(chalk.bold.red(`Archivo ${file} no borrado` + err));
+          }
+        });
+      });
+    });
+  });
 }
 
 async function connectionUpdate(update) {
-  
-
   const {connection, lastDisconnect, isNewLogin} = update;
   stopped = connection;
   if (isNewLogin) conn.isInit = true;
@@ -330,45 +337,47 @@ async function connectionUpdate(update) {
     global.timestamp.connect = new Date;
   }
   if (global.db.data == null) loadDatabase();
-if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
-if (opcion == '1' || methodCodeQR) {
-    console.log(chalk.yellow('[ ℹ️ ] Escanea el código QR.'));
- }}
+  if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
+    if (opcion == '1' || methodCodeQR) {
+      console.log(chalk.yellow('[ ℹ️ ] Escanea el código QR.'));
+    }
+  }
   if (connection == 'open') {
     console.log(chalk.yellow('[ ℹ️ ] Conectado correctamente.'));
   }
-let reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
-if (reason == 405) {
-await fs.unlinkSync("./MysticSession/" + "creds.json")
-console.log(chalk.bold.redBright(`[ ⚠ ] Conexión replazada, Por favor espere un momento me voy a reiniciar...\nSi aparecen error vuelve a iniciar con : npm start`)) 
-process.send('reset')}
-if (connection === 'close') {
+  const reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
+  if (reason == 405) {
+    await fs.unlinkSync('./MysticSession/' + 'creds.json');
+    console.log(chalk.bold.redBright(`[ ⚠ ] Conexión replazada, Por favor espere un momento me voy a reiniciar...\nSi aparecen error vuelve a iniciar con : npm start`));
+    process.send('reset');
+  }
+  if (connection === 'close') {
     if (reason === DisconnectReason.badSession) {
-        conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
-        //process.exit();
+      conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
+      // process.exit();
     } else if (reason === DisconnectReason.connectionClosed) {
-        conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
+      await global.reloadHandler(true).catch(console.error);
     } else if (reason === DisconnectReason.connectionLost) {
-        conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
+      await global.reloadHandler(true).catch(console.error);
     } else if (reason === DisconnectReason.connectionReplaced) {
-        conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
-        //process.exit();
+      conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
+      // process.exit();
     } else if (reason === DisconnectReason.loggedOut) {
-        conn.logger.error(`[ ⚠ ] Conexion cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
-        //process.exit();
+      conn.logger.error(`[ ⚠ ] Conexion cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
+      // process.exit();
     } else if (reason === DisconnectReason.restartRequired) {
-        conn.logger.info(`[ ⚠ ] Reinicio necesario, reinicie el servidor si presenta algún problema.`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.info(`[ ⚠ ] Reinicio necesario, reinicie el servidor si presenta algún problema.`);
+      await global.reloadHandler(true).catch(console.error);
     } else if (reason === DisconnectReason.timedOut) {
-        conn.logger.warn(`[ ⚠ ] Tiempo de conexión agotado, reconectando...`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.warn(`[ ⚠ ] Tiempo de conexión agotado, reconectando...`);
+      await global.reloadHandler(true).catch(console.error);
     } else {
-        conn.logger.warn(`[ ⚠ ] Razón de desconexión desconocida. ${reason || ''}: ${connection || ''}`);
-        await global.reloadHandler(true).catch(console.error);
+      conn.logger.warn(`[ ⚠ ] Razón de desconexión desconocida. ${reason || ''}: ${connection || ''}`);
+      await global.reloadHandler(true).catch(console.error);
     }
-}
+  }
 }
 
 process.on('uncaughtException', console.error);
@@ -377,9 +386,7 @@ let isInit = true;
 
 let handler = await import('./handler.js');
 global.reloadHandler = async function(restatConn) {
-  
   try {
-   
     const Handler = await import(`./handler.js?update=${Date.now()}`).catch(console.error);
     if (Object.keys(Handler || {}).length) handler = Handler;
   } catch (e) {
@@ -405,7 +412,7 @@ global.reloadHandler = async function(restatConn) {
     conn.ev.off('creds.update', conn.credsUpdate);
   }
 
-  // Para cambiar estos mensajes, solo los archivos en la carpeta de language, 
+  // Para cambiar estos mensajes, solo los archivos en la carpeta de language,
   // busque la clave "handler" dentro del json y cámbiela si es necesario
   conn.welcome = '👋 ¡Bienvenido/a!\n@user';
   conn.bye = '👋 ¡Hasta luego!\n@user';

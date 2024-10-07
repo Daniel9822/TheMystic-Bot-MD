@@ -5,8 +5,8 @@ const {
   proto,
   generateWAMessage,
   areJidsSameUser,
-  decryptPollVote
-} = (await import("baileys")).default;
+  decryptPollVote,
+} = (await import('baileys')).default;
 
 export async function all(m, chatUpdate) {
   /* if (m.message.pollUpdateMessage) {
@@ -44,7 +44,7 @@ export async function all(m, chatUpdate) {
     id = JSON.parse(m.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id;
   }
   const text = m.message.buttonsResponseMessage?.selectedDisplayText || m.message.templateButtonReplyMessage?.selectedDisplayText || m.message.listResponseMessage?.title;
-  let isIdMessage = false; 
+  let isIdMessage = false;
   let usedPrefix;
   for (const name in global.plugins) {
     const plugin = global.plugins[name];
@@ -118,7 +118,7 @@ export async function all(m, chatUpdate) {
   this.ev.emit('messages.upsert', msg);
 }
 
-/*const {
+/* const {
   proto,
   generateWAMessage,
   areJidsSameUser,

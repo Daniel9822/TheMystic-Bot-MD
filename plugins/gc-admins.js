@@ -1,11 +1,10 @@
 
 
-
 const handler = async (m, {conn, participants, groupMetadata, args}) => {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje
-  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`))
-  const tradutor = _translate.plugins.gc_admins
+  const datas = global;
+  const idioma = datas.db.data.users[m.sender].language || global.defaultLenguaje;
+  const _translate = JSON.parse(fs.readFileSync(`./src/languages/${idioma}.json`));
+  const tradutor = _translate.plugins.gc_admins;
 
   const pp = await conn.profilePictureUrl(m.chat, 'image').catch((_) => null) || './src/assets/images/menu/main/administracion.png';
   const groupAdmins = participants.filter((p) => p.admin);
